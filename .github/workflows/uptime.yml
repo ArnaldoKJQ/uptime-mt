@@ -8,7 +8,8 @@ on:
 
 jobs:
   ping_site:
-    if: github.ref == 'refs/heads/main'   # only run on default branch
+    # only run on default branch
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     name: Uptime Check
     steps:
