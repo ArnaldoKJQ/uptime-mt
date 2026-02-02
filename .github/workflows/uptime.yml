@@ -4,6 +4,7 @@ on:
   schedule:
     # Run every 5min
     - cron: '*/5 * * * *'
+  workflow_dispatch:
 
 jobs:
   ping_site:
