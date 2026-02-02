@@ -10,7 +10,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     name: Uptime Check
-    timeout-minutes: 1   # set timeout to 3 minutes
+    timeout-minutes: 5   # set timeout to 3 minutes
     steps:
       - name: Debug Cron
         run: |
