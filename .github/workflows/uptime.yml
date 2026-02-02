@@ -8,17 +8,24 @@ on:
 
 jobs:
   ping_site:
+    if: github.ref == 'refs/heads/main'   # only run on default branch
     runs-on: ubuntu-latest
     name: Uptime Check
     steps:
-      # Debug step to verify cron is firing
+      # Step 1: Debug – confirm schedule is firing
       - name: Debug Cron
-        run: echo "Scheduled run at $(date -u) on branch ${{ github.ref }}"
+        run: |
+          echo "Scheduled run at $(date -u) on branch ${{ github.ref }}"
+          echo "GitHub Run ID: ${{ github.run_id }}"
 
-      # Actual uptime check
+      # Step 2: Ping site
       - name: Ping Site
         id: uptime
         uses: srt32/uptime@master
         with:
           url-to-hit: "https://www.google.com/1234"
           expected-statuses: "200"
+
+      # Step 3: Show result from uptime action
+      - name: Show Result
+        run: echo "Ping step outcome: ${{ steps.uptime.outcome }}"
