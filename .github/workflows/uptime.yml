@@ -2,24 +2,20 @@ name: Uptime Monitor
 
 on:
   schedule:
-    # Run every 5 minutes (UTC)
     - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
   ping_site:
-    # only run on default branch
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     name: Uptime Check
     steps:
-      # Step 1: Debug – confirm schedule is firing
       - name: Debug Cron
         run: |
           echo "Scheduled run at $(date -u) on branch ${{ github.ref }}"
           echo "GitHub Run ID: ${{ github.run_id }}"
 
-      # Step 2: Ping site
       - name: Ping Site
         id: uptime
         uses: srt32/uptime@master
@@ -27,6 +23,6 @@ jobs:
           url-to-hit: "https://www.google.com/1234"
           expected-statuses: "200"
 
-      # Step 3: Show result from uptime action
       - name: Show Result
-        run: echo "Ping step outcome: ${{ steps.uptime.outcome }}"
+        run: |
+          echo "Ping step outcome: ${{ steps.uptime.outcome }}"
