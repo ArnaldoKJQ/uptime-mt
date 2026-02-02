@@ -2,7 +2,7 @@ name: Uptime Monitor
 
 on:
   schedule:
-    # Run every 5min
+    # Run every 5 minutes (UTC)
     - cron: '*/5 * * * *'
   workflow_dispatch:
 
@@ -11,9 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     name: Uptime Check
     steps:
-    - name: Pintg Site
-      id: hello
-      uses: srt32/uptime@master
-      with:
-        url-to-hit: "https://www.google.com/1234"
-        expected-statuses: "200"
+      # Debug step to verify cron is firing
+      - name: Debug Cron
+        run: echo "Scheduled run at $(date -u) on branch ${{ github.ref }}"
+
+      # Actual uptime check
+      - name: Ping Site
+        id: uptime
+        uses: srt32/uptime@master
+        with:
+          url-to-hit: "https://www.google.com/1234"
+          expected-statuses: "200"
